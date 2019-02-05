@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Sphere : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class Sphere : MonoBehaviour
 
     private int ctr = 0;
 
+    public Text score;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +23,7 @@ public class Sphere : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Jump") && Mathf.Abs(rigidbody.velocity.y) < 0.05f)
+        if (Input.GetButtonDown("Jump"))
         {
             Jump();
         }
@@ -39,6 +42,7 @@ public class Sphere : MonoBehaviour
     public void IncrementCtr() {
         ctr++;
         Debug.Log("Contador de monedas: " + ctr);
+        score.text = "Score: " + ctr;
     }
 
     public int Coins()
