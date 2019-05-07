@@ -1,17 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class Sphere : MonoBehaviour
 {
 
+    public Camera camera;
+    public NavMeshAgent navMeshAgent;
     public Rigidbody rigidbody;
-
-    public int force = 10;
-
     private int ctr = 0;
-
     public Text score;
 
     // Start is called before the first frame update
@@ -23,20 +22,16 @@ public class Sphere : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetMouseButtonDown(0))
         {
-            Jump();
+            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                navMeshAgent.SetDestination(hit.point);
+            }
         }
-    }
-    void FixedUpdate()
-    {
-        rigidbody.AddForce(Input.GetAxis("Horizontal") * force, 0, Input.GetAxis("Vertical") * force);
-
-    }
-
-    private void Jump()
-    {
-        rigidbody.AddForce(Vector3.up * force, ForceMode.Impulse);
     }
 
     public void IncrementCtr() {
